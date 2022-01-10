@@ -27,12 +27,5 @@
             return view('product', ['product' => $product]);
         }
 
-        public function basket () {
-            return view('basket');
-        }
-
-        public function order () {
-            return view('order');
-        }
 
     }
