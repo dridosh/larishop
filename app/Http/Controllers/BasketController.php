@@ -1,17 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+    use App\Models\Order;
 
-class BasketController extends Controller
-{
-    public function basket () {
-        return view('basket');
-    }
+    class BasketController extends Controller {
 
-    public function order () {
-        return view('order');
-    }
+        public function basket () {
+            $orderId = session('orderId');
+            if (!is_null($orderId)) {
+                $order = Order::findOrFail($orderId);
+            }
+
+            return view('basket', compact('order'));
+        }
+
+        public function order () {
+            return view('order');
+        }
+
+        public function basketAdd ($productId = null) {
+
+            $orderId = session('orderId');
+            if (is_null($orderId)) {
+                $order = Order::create();
+                session(['orderId' => $order->id]);
+            } else {
+                $order = Order::find($orderId);
+            }
+            $order->products()->attach($productId);
+
+            return view('basket', compact('order'));
+        }
 //
-}
+    }

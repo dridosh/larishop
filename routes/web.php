@@ -9,5 +9,6 @@
     Route::get('/categories', 'App\Http\Controllers\MainController@categories')->name('categories');
     Route::get('/{category}', 'App\Http\Controllers\MainController@category')->name('category');
     Route::get('/{category}/{product?}', 'App\Http\Controllers\MainController@product')->name('product');
+    Route::post('/basket/add/{id}', 'App\Http\Controllers\BasketController@basketAdd')->name('basket-add');
 
 
