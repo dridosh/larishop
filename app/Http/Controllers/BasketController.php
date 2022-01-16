@@ -3,6 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Models\Order;
+    use App\Models\Product;
     use Illuminate\Http\Request;
 
 
@@ -34,7 +35,12 @@
                 return redirect(route('index'));
             }
             $order = Order::find($orderId);
-            $result = $order->saveOrder($request->name, $request->email, $request->phone);
+            $success = $order->saveOrder($request->name, $request->email, $request->phone);
+            if ($success) {
+                session()->flash('success', 'Ваш заказ принят в обработку');
+            } else {
+                session()->flash('danger', 'Ошибка добавления заказа');
+            }
             return redirect()->route('index');
         }
 
@@ -54,6 +60,8 @@
             } else {
                 $order->products()->attach($productId);
             }
+            $product = Product::find($productId);
+            session()->flash('success', 'Товар "' . $product->name . '" добавлен в корзину');
             return redirect()->route('basket');
         }
 
@@ -61,9 +69,12 @@
         public function basketRemove ($productId) {
             $orderId = session('orderId');
             if (is_null($orderId)) {
+                session()->flash('danger', 'Ошибка получения номера заказа');
                 return redirect()->route('basket');
             }
             $order = Order::find($orderId);
+            $product = Product::find($productId);
+
             if ($order->products->contains($productId)) {
                 $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
                 if ($pivotRow->count < 2) {
@@ -73,6 +84,9 @@
                     $pivotRow->update();
                 }
             }
+
+            session()->flash('warning', 'Товар "' . $product->name . '" удален из корзины');
+
             return redirect()->route('basket');
         }
 //

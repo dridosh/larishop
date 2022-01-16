@@ -22,7 +22,8 @@ class Order extends Model
   }
 
     public function saveOrder ($name,$email,$phone) {
-        if ($this->status ==0) {
+
+        if ($this->status == 0) {
             $this->name = $name;
             $this->email = $email;
             $this->phone = $phone;
