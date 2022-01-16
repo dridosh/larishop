@@ -27,8 +27,6 @@
             return view('product', ['product' => $product]);
         }
 
-        public function order ($category, $product = null) {
-            return view('order');
-        }
+
 
     }

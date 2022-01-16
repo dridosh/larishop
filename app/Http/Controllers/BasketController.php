@@ -19,7 +19,14 @@
         }
 
         public function order () {
-            return view('order');
+            $orderId = session('orderId');
+            if (is_null($orderId)) {
+                return  redirect (route('index'));
+            } else {
+                $order = Order::find($orderId);
+                return view('order',compact('order'));
+
+            }
         }
 
         public function basketAdd ($productId = null) {
