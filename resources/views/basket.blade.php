@@ -2,7 +2,7 @@
 @section('title', 'Корзина')
 
 @section('content')
-    <p class="alert alert-success">Добавлен товар iPhone X 64GB</p>
+{{--    <p class="alert alert-success">Добавлен товар iPhone X 64GB</p>--}}
     <h1>Корзина</h1>
     <p>Оформление заказа</p>
     <div class="panel">
@@ -25,35 +25,35 @@
                                 {{$product -> name}}
                             </a>
                         </td>
-                        <td><span class="badge">1</span>
+                        <td><span class="badge">{{$product->pivot->count}}</span>
                             <div class="btn-group form-inline">
-                                <form action="/basket/remove/1" method="POST">
-                                    <button type="submit" class="btn btn-danger" href=""><span
+                                <form action="{{route('basket-remove', $product)}}" method="POST">
+                                    <button type="submit" class="btn btn-danger" ><span
                                             class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+                                    @csrf
                                 </form>
                                 <form action="{{route('basket-add', $product)}}" method="POST">
-                                    <button type="submit" class="btn btn-success"
-                                            href=""><span
+                                    <button type="submit" class="btn btn-success"><span
                                             class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                                     @csrf
                                 </form>
                             </div>
                         </td>
                         <td>{{$product->price}} ₽</td>
-                        <td>{{$product->price}} ₽</td>
+                        <td>{{$product->getPriceForCount()}} ₽</td>
                     </tr>
 
                 @endforeach
 
                 <tr>
                     <td colspan="3">Общая стоимость:</td>
-                    <td>71990 ₽</td>
+                    <td>  {{$order->getfullPrice()}} ₽</td>
                 </tr>
             </tbody>
         </table>
         <br>
         <div class="btn-group pull-right" role="group">
-            <a type="button" class="btn btn-success" href="/basket/order">Оформить
+            <a type="button" class="btn btn-success" href="{{Route('order')}}">Оформить
                                                                           заказ</a>
         </div>
     </div>

@@ -18,4 +18,11 @@
         public function category () {
             return $this->belongsTo(Category::class);
         }
+
+        public function getPriceForCount ($count = 1) {
+            if (!is_null($count)) {
+               return $this->pivot->count*$this->price;
+            }
+           return $this->price;
+        }
     }
