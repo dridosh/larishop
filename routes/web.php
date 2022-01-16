@@ -6,6 +6,7 @@
     Route::get('/', 'App\Http\Controllers\MainController@index')->name('index');
     Route::get('/basket', 'App\Http\Controllers\BasketController@basket')->name('basket');
     Route::get('/basket/order', 'App\Http\Controllers\BasketController@order')->name('order');
+    Route::post('/basket/order', 'App\Http\Controllers\BasketController@orderConfirm')->name('order-confirm');
     Route::post('/basket/add/{id}', 'App\Http\Controllers\BasketController@basketAdd')->name('basket-add');
     Route::post('/basket/remove/{id}', 'App\Http\Controllers\BasketController@basketRemove')->name('basket-remove');
 
