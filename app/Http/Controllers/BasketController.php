@@ -28,20 +28,13 @@
         }
 
 
-        public function orderConfirm (Request $request ) {
+        public function orderConfirm (Request $request) {
             $orderId = session('orderId');
             if (is_null($orderId)) {
                 return redirect(route('index'));
             }
-          //  dd($request->name,$request->phone,$request->email,);
-
             $order = Order::find($orderId);
-            $order->name=$request->name;
-            $order->email=$request->email;
-            $order->phone=$request->phone;
-            $order->status=1;
-            $order->save();
-            
+            $result = $order->saveOrder($request->name, $request->email, $request->phone);
             return redirect()->route('index');
         }
 

@@ -14,7 +14,7 @@ class AddEmailToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('email')->after('phone');
+            $table->string('email')->after('phone')->nullable();
         });
     }
 
@@ -26,8 +26,7 @@ class AddEmailToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('email'); //
-            //
+            $table->dropColumn('email');
         });
     }
 }
