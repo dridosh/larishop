@@ -2,7 +2,22 @@
 
     use Illuminate\Support\Facades\Route;
 
-    Auth::routes();
+
+    Auth::routes([
+        'reset'   => false,
+        'confirm' => false,
+        'verify'  => false,
+    ]);
+
+    Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('do-logout');
+
+    Route::group([
+        'middleware' =>  'auth',
+
+    ],function () {
+        Route::get('/orders', 'App\Http\Controllers\Admin\OrderController@index')->name('orders');
+    });
+
 
     Route::get('/', 'App\Http\Controllers\MainController@index')->name('index');
 
@@ -16,9 +31,3 @@
     Route::get('/{category}', 'App\Http\Controllers\MainController@category')->name('category');
     Route::get('/{category}/{product?}', 'App\Http\Controllers\MainController@product')->name('product');
 
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

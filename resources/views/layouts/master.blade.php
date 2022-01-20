@@ -27,6 +27,16 @@
                         </li>
                         <li><a href="{{route('basket')}}">В корзину</a></li>
                     </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        @guest
+                            <li><a href="{{route('login')}}"> Авторизация </a></li>
+                        @endguest
+                        @auth
+                            <li><a href="{{route('do-logout')}}"> Выход </a></li>
+                        @endauth
+                    </ul>
+
                 </div>
             </div>
         </nav>
